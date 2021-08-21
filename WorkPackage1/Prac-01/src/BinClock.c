@@ -6,7 +6,7 @@
  *
  *
  * <TSWLUN002> <YKXMPU001>
- * Date
+ * Date 21 August 2021
 */
 
 #include <signal.h> //for catching signals
@@ -92,7 +92,6 @@ int main(void){
         // Repeat this until we shut down
         for (;;){
                 //Fetch the time from the RTC
-                //Write your logic here
                 hours = wiringPiI2CReadReg8(RTC, HOUR_REGISTER);
                 mins = wiringPiI2CReadReg8(RTC, MIN_REGISTER);
                 secs = wiringPiI2CReadReg8(RTC, SEC_REGISTER);
@@ -100,9 +99,11 @@ int main(void){
                 printf("The current time is: %d:%d:%d\n", hours, mins, secs);
 
                 //toggle LED in second
-                 digitalWrite(LED, HIGH); //turn high
-                 delay(1000); //delay for 1 second
-                 digitalWrite(LED, LOW);  //turn low
+                if(digitalRead(LED))
+                        digitalWrite(LED, LOW); //turn Low
+                else
+                        digitalWrite(LED, HIGH);  //turn high
+                 
                  delay(1000); //delay one second
         }
         return 0;
